@@ -143,10 +143,48 @@ After placing `super.img` in your base project folder:
 ## Porting
 
 1. Copy These Files From Base To Port
-   - product/etc/displayconfig/display_idxxxxxx
+   - "product/etc/displayconfig/display_id_xxxxxxxxxx.xml"
    
    - product/overlay/
-        - devicesoverlay
-        - devicesandroidoverlay
-        - aospframeworkresoverlay
-        - miuiframeworkresoverlay
+        - DevicesOverlay.apk
+        - DevicesAndroidOverlay.apk
+        - AospFrameworkResOverlay.apk
+        - MiuiFrameworkResOverlay.apk
+        
+   - /product/etc/device_features
+
+2. If HOS A15+
+   - copy contents from port/mi_ext/etc/build.prop to port/product/etc/build.prop
+   
+3. If HOS3 A16+
+   - Do above step and Remove these props from system / product build.props
+   
+   - persist.sys.computility.cpulevel=6
+   - persist.sys.computility.gpulevel=6
+   - persist.sys.computility.version=2025
+   - persist.sys.power.cpuinfostorage=true
+   - persist.sys.enhance_vkpipelinecache.enable=true
+   - persist.sys.power_soc_computing_optimization=true
+   
+   
+4. Done
+
+## Repacking [Dont Mess Up]
+
+1. Pack Product + Mi_ext + System + System_ext of Port
+
+2. Pack Vendor + Odm + Vendor_dlkm of Stock ( Skip if already exist)
+
+3. Most device should be packed as erofs + RO
+
+4. After Pack Place Packed Images in one Project
+
+5. Pack Super.img 
+   - 6.5 GB / 8.5 / 9 according to your device
+   - VirtualAB
+   - RAW
+   
+6. Place the super.img in a flashing script
+
+## Done
+   
